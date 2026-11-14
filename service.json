@@ -1,0 +1,54 @@
+{
+    "id": "osmium-trade-lacrm",
+    "name": "Trade LACRM Sync",
+    "version": "0.1.0",
+    "description": "Fills Trade Accounts from Less Annoying CRM: a submitted application form creates a pending customer, a won sale activates one, a lost sale suspends one, and a bulk import catches up. Trade Accounts and the LACRM service know nothing of each other; this connects them",
+    "category": "business",
+    "author": {
+        "name": "Gavin Cox"
+    },
+    "license": "proprietary",
+    "requires": {
+        "osmium": ">=1.0.0",
+        "php": ">=8.1",
+        "services": ["osmium-trade-accounts", "osmium-lacrm"]
+    },
+    "autoload": [
+        "models"
+    ],
+    "hooks": {
+        "trade.sources": [
+            "Osmium\\Services\\TradeLacrm\\Models\\TradeLacrmHooks::source"
+        ],
+        "lacrm.form.submitted": [
+            "Osmium\\Services\\TradeLacrm\\Models\\TradeLacrmHooks::formSubmitted"
+        ],
+        "lacrm.sale.won": [
+            "Osmium\\Services\\TradeLacrm\\Models\\TradeLacrmHooks::saleWon"
+        ],
+        "lacrm.sale.lost": [
+            "Osmium\\Services\\TradeLacrm\\Models\\TradeLacrmHooks::saleLost"
+        ],
+        "lacrm.contact.updated": [
+            "Osmium\\Services\\TradeLacrm\\Models\\TradeLacrmHooks::contactUpdated"
+        ]
+    },
+    "admin": {
+        "routes": {
+            "admin/trade/lacrm-import": {
+                "controller": "controllers/TradeLacrmImportController.php",
+                "class": "Osmium\\Services\\TradeLacrm\\Controllers\\TradeLacrmImportController",
+                "method": "index",
+                "title": "Import Customers from LACRM"
+            },
+            "admin/trade/lacrm-import/action": {
+                "controller": "controllers/TradeLacrmImportController.php",
+                "class": "Osmium\\Services\\TradeLacrm\\Controllers\\TradeLacrmImportController",
+                "method": "action"
+            }
+        }
+    },
+    "setup": {
+        "postInstallNote": "Choose Less Annoying CRM as the customer source under Settings > Trade Accounts. Then a won sale makes an active customer, and the customers page offers an import."
+    }
+}
