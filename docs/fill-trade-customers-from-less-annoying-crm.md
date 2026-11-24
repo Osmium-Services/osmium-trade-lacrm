@@ -1,6 +1,7 @@
 ---
 title: Fill trade customers from Less Annoying CRM
 tags: trade, lacrm, crm, import, customers, won, lost, sync
+page: admin/trade/lacrm-import
 ---
 
 **Trade LACRM Sync** keeps your trade customers in step with Less Annoying CRM.
